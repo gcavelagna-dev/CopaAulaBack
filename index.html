@@ -1,0 +1,580 @@
+<!-- 
+  PROJETO: História das Copas do Mundo
+  ARQUIVO: index.html — Estrutura principal da aplicação comentada linha a linha
+  DISCIPLINA: Programação Back-End I — 2026
+-->
+
+<!-- Define o tipo de documento como HTML5 para o navegador -->
+<!DOCTYPE html>
+<!-- Define o idioma principal da página como Português do Brasil -->
+<html lang="pt-BR">
+<!-- Início do cabeçalho da página, onde ficam os metadados e recursos importados -->
+<head>
+  <!-- Define a codificação de caracteres como UTF-8 para aceitar acentuação -->
+  <meta charset="UTF-8">
+  <!-- Configura a viewport para tornar a página responsiva em dispositivos móveis -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Define o título que aparece na aba do navegador -->
+  <title>História das Copas do Mundo</title>
+  <!-- Metatag SEO para a descrição do site nos mecanismos de busca como o Google -->
+  <meta name="description" content="Explore a história de todas as edições das Copas do Mundo de Futebol, desde 1930 até 2022. Dados, curiosidades, campeões, estatísticas e um quiz interativo!">
+  <!-- Pré-conexão ao domínio do Google Fonts para otimizar o carregamento das fontes -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <!-- Pré-conexão ao domínio de fontes do Google Fonts com CORS habilitado -->
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <!-- favicon, para a logo do site-->
+  <link rel="icon" type="image/png" href="img/geral/mascoteBola.png">
+  <!-- Importa a fonte Poppins com vários pesos (300 a 800) para a tipografia do site -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Importa a biblioteca de ícones Font Awesome para uso de ícones vetoriais -->
+  <!-- Importa o arquivo de estilos CSS externo -->
+  <link rel="stylesheet" href="style.css">
+  <!-- Define o mascote SVG como o ícone (favicon) da aba do navegador -->
+  <link rel="icon" type="image/svg+xml" href="img/geral/mascote.svg">
+<!-- Fim do cabeçalho da página -->
+</head>
+<!-- Início do corpo do documento contendo todos os elementos visíveis -->
+<body>
+
+  <!-- MASCOTE: marca d'água semitransparente fixa no fundo da página -->
+  <!-- Container da marca d'água oculto para leitores de tela -->
+  <div id="mascote-watermark" aria-hidden="true">
+    <!-- Carrega o mascote SVG externamente como um objeto interativo -->
+    <object data="img/geral/mascote.svg" type="image/svg+xml"></object>
+  <!-- Fim do container da marca d'água -->
+  </div>
+
+  <!-- CABEÇALHO FIXO: menu de navegação e título do site -->
+  <!-- Tag semântica header com classe para fixação no topo -->
+  <header class="header-fixed" id="main-header">
+    <!-- Container centralizado que alinha o conteúdo do cabeçalho -->
+    <div class="header-container">
+      <!-- Link do logo que aponta para o início da página principal -->
+      <a href="#inicio" class="logo" id="header-logo">
+        <!-- Span contendo a pequena versão do mascote desenhada em SVG -->
+        <span class="logo-icon">
+          <!-- Início do SVG inline do mascote reduzido para o logotipo -->
+          <svg viewBox="0 0 100 100" width="32" height="32">
+            <!-- Desenha o círculo branco com borda azul escuro do corpo do mascote -->
+            <circle cx="50" cy="50" r="38" fill="#FFFFFF" stroke="#0A2342" stroke-width="6" />
+            <!-- Desenha o gomo pentagonal preto no centro da bola -->
+            <polygon points="50,38 58,44 55,54 45,54 42,44" fill="#0A2342" />
+            <!-- Linha de gomo superior -->
+            <line x1="50" y1="38" x2="50" y2="20" stroke="#0A2342" stroke-width="4" />
+            <!-- Linha de gomo superior direita -->
+            <line x1="58" y1="44" x2="76" y2="35" stroke="#0A2342" stroke-width="4" />
+            <!-- Linha de gomo inferior direita -->
+            <line x1="55" y1="54" x2="68" y2="70" stroke="#0A2342" stroke-width="4" />
+            <!-- Linha de gomo inferior esquerda -->
+            <line x1="45" y1="54" x2="32" y2="70" stroke="#0A2342" stroke-width="4" />
+            <!-- Linha de gomo superior esquerda -->
+            <line x1="42" y1="44" x2="24" y2="35" stroke="#0A2342" stroke-width="4" />
+            <!-- Desenha o contorno do olho esquerdo -->
+            <circle cx="43" cy="44" r="5" fill="#FFFFFF" stroke="#0A2342" stroke-width="2" />
+            <!-- Desenha a pupila preta do olho esquerdo -->
+            <circle cx="44" cy="44" r="2" fill="#0A2342" />
+            <!-- Desenha o contorno do olho direito -->
+            <circle cx="57" cy="44" r="5" fill="#FFFFFF" stroke="#0A2342" stroke-width="2" />
+            <!-- Desenha a pupila preta do olho direito -->
+            <circle cx="56" cy="44" r="2" fill="#0A2342" />
+            <!-- Desenha a curva do sorriso amigável do mascote -->
+            <path d="M 44 59 Q 50 66 56 59" fill="none" stroke="#0A2342" stroke-width="4" stroke-linecap="round" />
+          <!-- Fim do SVG inline -->
+          </svg>
+        <!-- Fim do span do ícone -->
+        </span>
+        <!-- Texto da marca do logotipo com destaque dourado -->
+        <span class="logo-text">Copa<span class="highlight">História</span></span>
+      <!-- Fim do link do logo -->
+      </a>
+      
+      <!-- Menu de navegação para as seções principais -->
+      <nav class="nav-menu" id="nav-navigation">
+        <!-- Lista de itens de navegação -->
+        <ul>
+          <!-- Link para retornar ao início (Home), marcado como ativo por padrão -->
+          <li><a href="#inicio" class="nav-link active" id="nav-inicio">Início</a></li>
+          <!-- Link para rolar até a galeria de copas do mundo -->
+          <li><a href="#galeria" class="nav-link" id="nav-copas">Todas as Copas</a></li>
+          <!-- Link para rolar até a linha do tempo de campeões -->
+          <li><a href="#timeline" class="nav-link" id="nav-campeoes">Campeões</a></li>
+          <!-- Link para rolar até a seção de jogo do quiz -->
+          <li><a href="#quiz" class="nav-link" id="nav-quiz-link">Quiz</a></li>
+          <!-- Link para rolar até a seção de história e curiosidades de origem -->
+          <li><a href="#curiosidades" class="nav-link" id="nav-curiosidades">Curiosidades</a></li>
+        </ul>
+      <!-- Fim do menu de navegação -->
+      </nav>
+      
+      <!-- Botão hamburguer invisível no desktop, exibido no mobile para abrir o menu -->
+      <button class="mobile-menu-toggle" id="btn-mobile-toggle" aria-label="Abrir Menu">
+        <!-- Barras horizontais que formam o ícone do menu hamburguer -->
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- VIEW PRINCIPAL: Contém as seções da página inicial -->
+  <main id="home-view">
+
+    <!-- SEÇÃO 1: Banner principal com imagem de fundo e chamada para ação -->
+    <section class="hero-banner" id="inicio">
+      <!-- Camada de overlay escuro para melhorar o contraste do texto sobre o fundo -->
+      <div class="hero-overlay"></div>
+      <!-- Conteúdo de texto centralizado sobre o banner principal -->
+      <div class="hero-content">
+        <!-- Título de boas-vindas com destaque dourado -->
+        <h1>A História das <span class="text-gold">Copas do Mundo</span></h1>
+        <!-- Parágrafo introdutório que convida o leitor a explorar as copas -->
+        <p>Embarque em uma jornada épica pelo maior espetáculo da Terra. Conheça as 22 edições de glórias, dramas e lendas que moldaram o futebol mundial.</p>
+        <!-- Área que agrupa os botões de ação do banner principal -->
+        <div class="hero-actions">
+          <!-- Botão dourado para navegar até a galeria de copas -->
+          <a href="#galeria" class="btn btn-gold btn-large" id="btn-explorar-historia">Explorar História</a>
+          <!-- Botão transparente com borda branca para navegar ao quiz -->
+          <a href="#quiz" class="btn btn-outline-white btn-large" id="btn-ir-quiz">Testar Conhecimentos</a>
+        </div>
+      </div>
+      
+      <!-- MASCOTE: Versão animada do Zico no banner com balão de fala -->
+      <div class="mascote-hero" id="mascote-hero-container">
+        <!-- Balão de fala do mascote que aparece ao passar o mouse -->
+        <div class="speech-bubble" id="bubble-hero">Bem-vindo à história do futebol mundial!</div>
+        <!-- Contenedor do mascote com animação de pulsação CSS -->
+        <div class="mascote-wrapper">
+          <!-- Carrega o mascote SVG completo -->
+          <object data="img/geral/mascote.svg" type="image/svg+xml" class="mascote-svg-obj" aria-label="Mascote Zico"></object>
+        </div>
+      </div>
+    </section>
+
+    <!-- SEÇÃO 2: Texto introdutório sobre a origem da Copa -->
+    <section class="intro-section section-padding" id="curiosidades">
+      <!-- Container centralizador para alinhar o conteúdo da seção -->
+      <div class="container">
+        <!-- Cabeçalho da seção com tag, título e linha de destaque -->
+        <div class="section-header text-center">
+          <!-- Tag visual estilizada dourada -->
+          <span class="section-tag">A Origem</span>
+          <!-- Título secundário H2 da seção de introdução -->
+          <h2>Como Tudo Começou</h2>
+          <!-- Linha horizontal decorativa dourada abaixo do título -->
+          <div class="header-line"></div>
+        </div>
+        
+        <!-- Grid de 2 colunas: texto explicativo na esquerda e imagem na direita -->
+        <div class="intro-grid">
+          <!-- Coluna da esquerda contendo os parágrafos explicativos -->
+          <div class="intro-text">
+            <!-- Título de suporte H3 -->
+            <h3>A Primeira Copa (1930)</h3>
+            <!-- Texto explicativo sobre a idealização e escolha do Uruguai -->
+            <p>Idealizada por Jules Rimet, presidente da FIFA na época, a primeira Copa do Mundo ocorreu no Uruguai em 1930. O Uruguai foi escolhido por ser o atual bicampeão olímpico e por celebrar o centenário de sua independência. Naquela edição inaugural, apenas 13 países participaram devido aos custos elevados e às longas viagens transatlânticas de navio.</p>
+            <!-- Texto sobre o crescimento e evolução das Copas ao longo do tempo -->
+            <p>Com o passar das décadas, o torneio se transformou no maior evento esportivo de modalidade única do planeta, quebrando recordes de público e audiência a cada quatro anos, unindo culturas e consagrando nações.</p>
+            
+            <!-- Mini grid com caixas de estatísticas interessantes -->
+            <div class="stats-mini-grid">
+              <!-- Estatística 1: quantidade de edições -->
+              <div class="stat-box">
+                <span class="stat-number">22</span>
+                <span class="stat-label">Edições Realizadas</span>
+              </div>
+              <!-- Estatística 2: quantidade de campeões diferentes -->
+              <div class="stat-box">
+                <span class="stat-number">8</span>
+                <span class="stat-label">Países Campeões</span>
+              </div>
+              <!-- Estatística 3: ano de fundação -->
+              <div class="stat-box">
+                <span class="stat-number">1930</span>
+                <span class="stat-label">Ano de Fundação</span>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Coluna da direita contendo a imagem decorativa -->
+          <div class="intro-image-container">
+            <!-- Wrapper para gerenciar efeitos de sombra e zoom na imagem -->
+            <div class="img-wrapper">
+              <!-- Imagem da história com fallback dinâmico em caso de ausência local -->
+              <img src="img/geral/historia-1930.jpg" alt="Foto histórica dos jogadores na Copa de 1930" onerror="this.src='https://images.unsplash.com/photo-1508098682722-e99c43a406b2?q=80&w=800&auto=format&fit=crop'">
+              <!-- Legenda da imagem sobreposta na base -->
+              <div class="img-caption">Uruguai e Argentina entram em campo na final histórica de 1930</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SEÇÃO 3: Linha do tempo com os 6 marcos históricos mais importantes -->
+    <section class="timeline-section section-padding" id="timeline">
+      <div class="container">
+        <!-- Cabeçalho da seção com título centralizado -->
+        <div class="section-header text-center">
+          <span class="section-tag">Marcos Históricos</span>
+          <h2>Linha do Tempo dos Campeões</h2>
+          <div class="header-line"></div>
+        </div>
+        
+        <!-- Bloco principal da linha do tempo -->
+        <div class="timeline-container">
+          <!-- Linha vertical centralizada que conecta os cartões -->
+          <div class="timeline-line"></div>
+          
+          <!-- Marco 1 (1930) - Posicionado à esquerda -->
+          <div class="timeline-item left">
+            <!-- Círculo indicador com o ano do marco histórico -->
+            <div class="timeline-badge">1930</div>
+            <!-- Cartão com a informação histórica da edição -->
+            <div class="timeline-card">
+              <span class="timeline-year">1930 — Uruguai</span>
+              <h4>A Primeira Copa da História</h4>
+              <p>O Uruguai recebe e vence a primeira Copa do Mundo. Disputada em Montevidéu, a grande final contra a Argentina consagrou a seleção celeste com o título mundial no histórico Estádio Centenário.</p>
+            </div>
+          </div>
+          
+          <!-- Marco 2 (1950) - Posicionado à direita -->
+          <div class="timeline-item right">
+            <div class="timeline-badge">1950</div>
+            <div class="timeline-card">
+              <span class="timeline-year">1950 — Brasil</span>
+              <h4>O Silêncio do Maracanazo</h4>
+              <p>Após a Segunda Guerra Mundial, a Copa voltou no Brasil. Precisando de apenas um empate na rodada final, a seleção brasileira perdeu de virada por 2 a 1 para o Uruguai diante de 174 mil torcedores no Maracanã.</p>
+            </div>
+          </div>
+          
+          <!-- Marco 3 (1958) - Posicionado à esquerda -->
+          <div class="timeline-item left">
+            <div class="timeline-badge">1958</div>
+            <div class="timeline-card">
+              <span class="timeline-year">1958 — Suécia</span>
+              <h4>Nasce o Rei Pelé</h4>
+              <p>O Brasil conquista seu primeiro título mundial na Suécia. Um jovem de apenas 17 anos chamado Pelé chocou o mundo com sua genialidade, marcando 6 gols na fase final e iniciando a era de ouro canarinho.</p>
+            </div>
+          </div>
+          
+          <!-- Marco 4 (1970) - Posicionado à direita -->
+          <div class="timeline-item right">
+            <div class="timeline-badge">1970</div>
+            <div class="timeline-card">
+              <span class="timeline-year">1970 — México</span>
+              <h4>O Tri e a Era dos Cartões</h4>
+              <p>O Brasil encanta o planeta com o melhor time de todos os tempos. Esta edição no México marcou o tricampeonato brasileiro definitivo e a estreia histórica dos cartões amarelos e vermelhos na arbitragem.</p>
+            </div>
+          </div>
+          
+          <!-- Marco 5 (1994) - Posicionado à esquerda -->
+          <div class="timeline-item left">
+            <div class="timeline-badge">1994</div>
+            <div class="timeline-card">
+              <span class="timeline-year">1994 — EUA</span>
+              <h4>O Fim do Jejum de 24 Anos</h4>
+              <p>Após mais de duas décadas de jejum, o Brasil conquista o tetracampeonato nos Estados Unidos. Liderados por Romário, o título veio na primeira decisão por pênaltis da história da Copa, contra a Itália.</p>
+            </div>
+          </div>
+          
+          <!-- Marco 6 (2022) - Posicionado à direita -->
+          <div class="timeline-item right">
+            <div class="timeline-badge">2022</div>
+            <div class="timeline-card">
+              <span class="timeline-year">2022 — Catar</span>
+              <h4>A Coroação de Lionel Messi</h4>
+              <p>No Catar, a Argentina de Lionel Messi conquistou o tricampeonato na final mais espetacular de todos os tempos. Messi marcou dois gols e garantiu a taça que faltava em sua carreira brilhante.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SEÇÃO 4: Grade com os 22 cards das edições — gerada pelo JavaScript -->
+    <section class="gallery-section section-padding" id="galeria">
+      <div class="container">
+        <!-- Cabeçalho da seção com instruções de navegação para o usuário -->
+        <div class="section-header text-center">
+          <span class="section-tag">Galeria de Edições</span>
+          <h2>Todas as Copas do Mundo</h2>
+          <p class="section-desc text-center">Clique em "Ver detalhes" para explorar dados detalhados, curiosidades exclusivas e fotos de cada uma das 22 edições.</p>
+          <div class="header-line"></div>
+        </div>
+        
+        <!-- Grid responsivo onde o script.js irá injetar os 22 cartões de cada copa -->
+        <div class="gallery-grid" id="copas-gallery">
+          <!-- Injetado dinamicamente via JS -->
+        </div>
+      </div>
+    </section>
+
+    <!-- SEÇÃO DE QUIZ: 5 perguntas interativas sobre a Copa do Mundo -->
+    <section class="quiz-section section-padding" id="quiz">
+      <div class="container">
+        <!-- Box principal que envolve o quiz -->
+        <div class="quiz-box-wrapper">
+          <!-- Cabeçalho que agrupa o mascote e os títulos do quiz -->
+          <div class="quiz-header-container">
+            <!-- Área do mascote Zico com seu balão de fala personalizado do quiz -->
+            <div class="quiz-mascote-wrapper">
+              <div class="quiz-speech-bubble" id="bubble-quiz">Será que você é bom de Copa?</div>
+              <!-- SVG do mascote ao lado do título -->
+              <object data="img/geral/mascote.svg" type="image/svg+xml" class="mascote-quiz-svg" aria-label="Mascote Zico Quiz"></object>
+            </div>
+            <!-- Textos e subtítulos da seção do quiz -->
+            <div class="quiz-titles">
+              <span class="section-tag">Diferencial / Teste de Conhecimento</span>
+              <h2>Quiz do Mundial</h2>
+              <p>Mostre que você é um craque e acerte as perguntas sobre a história da Copa do Mundo!</p>
+            </div>
+          </div>
+          
+          <!-- Área dinâmica de jogo do quiz -->
+          <div class="quiz-card-content" id="quiz-game-area">
+            <!-- Tela Inicial do Quiz -->
+            <div id="quiz-start-screen" class="quiz-step-panel">
+              <div class="quiz-intro-graphic">
+                <!-- Estádio com troféu giratório -->
+                <div class="stadium-graphic" style="background-image: linear-gradient(rgba(10,35,66,0.85), rgba(10,35,66,0.85)), url('https://images.unsplash.com/photo-1508098682722-e99c43a406b2?q=80&w=800&auto=format&fit=crop');">
+                  <span class="trophy-emoji">🏆</span>
+                </div>
+              </div>
+              <h3>Desafie-se!</h3>
+              <p>O quiz é composto por 5 perguntas de múltipla escolha baseadas em fatos históricos e curiosidades reais das Copas do Mundo.</p>
+              <!-- Botão para disparar o início do jogo do quiz -->
+              <button class="btn btn-gold btn-large" id="btn-start-quiz">Iniciar Quiz</button>
+            </div>
+
+            <!-- Tela de Pergunta (Oculta por padrão no início) -->
+            <div id="quiz-question-screen" class="quiz-step-panel hidden">
+              <!-- Barra de progresso do quiz -->
+              <div class="quiz-progress-bar-container">
+                <!-- Texto que exibe a pergunta atual (ex: 1 de 5) -->
+                <div class="quiz-progress-text">Pergunta <span id="current-question-num">1</span> de 5</div>
+                <!-- Pista (trilho) da barra de progresso -->
+                <div class="quiz-progress-track">
+                  <!-- Indicador de preenchimento da barra de progresso -->
+                  <div class="quiz-progress-fill" id="quiz-bar-fill" style="width: 20%;"></div>
+                </div>
+              </div>
+              
+              <!-- Texto da pergunta carregada dinamicamente -->
+              <h3 id="quiz-question-text">Qual país sediou e venceu a primeira Copa do Mundo em 1930?</h3>
+              
+              <!-- Container onde as 4 opções de resposta serão injetadas via JS -->
+              <div class="quiz-options-container" id="quiz-options">
+                <!-- Injetadas via JS -->
+              </div>
+              
+              <!-- Botão para avançar de pergunta (oculto até que uma resposta seja dada) -->
+              <button class="btn btn-gold btn-large hidden" id="btn-next-question">Próxima Pergunta ➡</button>
+            </div>
+
+            <!-- Tela de Resultado Final (Oculta por padrão no início) -->
+            <div id="quiz-results-screen" class="quiz-step-panel hidden">
+              <!-- Apresentação visual da pontuação e feedback final -->
+              <div class="results-visual">
+                <!-- Emoji comemorativo -->
+                <span id="results-badge" class="badge-success">🎉</span>
+                <!-- Título do resultado final (Parabéns, Precisa Treinar, etc) -->
+                <h3 id="quiz-results-title">Incrível!</h3>
+                <!-- Texto quantitativo de acertos (ex: Você acertou 4 de 5) -->
+                <p id="quiz-results-score">Você acertou 5 de 5 perguntas.</p>
+                <!-- Mensagem motivacional de feedback -->
+                <p id="quiz-results-feedback">Você é um verdadeiro historiador do futebol!</p>
+              </div>
+              <!-- Botões de ação pós-quiz -->
+              <div class="quiz-results-actions">
+                <!-- Reinicia o quiz do zero -->
+                <button class="btn btn-gold" id="btn-restart-quiz">Jogar Novamente</button>
+                <!-- Rola a tela suavemente até o início do site -->
+                <button class="btn btn-outline-dark" id="btn-quiz-home">Voltar ao Início</button>
+              </div>
+            </div>
+          <!-- Fim da área dinâmica do quiz -->
+          </div>
+        <!-- Fim do box do quiz -->
+        </div>
+      </div>
+    </section>
+
+  <!-- Fim do conteúdo principal da página home -->
+  </main>
+
+  <!-- TEMPLATE DE DETALHES: oculto por padrão, exibido pelo JS ao clicar em um card -->
+  <section class="details-section hidden" id="details-view">
+    <!-- Barra de navegação superior interna com botão de retorno -->
+    <div class="details-top-nav">
+      <div class="container">
+        <!-- Botão para retornar à página principal (Home) -->
+        <button class="btn btn-back" id="btn-voltar-home" aria-label="Voltar para a Página Principal">
+          <span class="arrow">⬅</span> Voltar para o Início
+        </button>
+      </div>
+    </div>
+    
+    <!-- Banner de topo da página de detalhes (sua classe de cores muda pelo JS com base no campeão) -->
+    <div class="details-hero-banner" id="details-hero">
+      <div class="details-hero-overlay"></div>
+      <div class="container">
+        <!-- Textos identificadores da Copa exibida -->
+        <div class="details-title-area">
+          <!-- Tag contendo o ano da edição -->
+          <span class="details-year-tag" id="details-year-tag">Copa do Mundo de 1970</span>
+          <!-- Título principal da copa (Local e Ano) -->
+          <h2 id="details-title">MÉXICO 1970</h2>
+          <!-- Linha contendo metadados gerais da Copa -->
+          <div class="details-meta-line">
+            <span class="meta-item"><strong>Sede:</strong> <span id="details-sede">México</span></span>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Corpo de conteúdo da página de detalhes com grid de 2 colunas -->
+    <div class="details-body-content section-padding">
+      <div class="container">
+        <!-- Grid principal de detalhes -->
+        <div class="details-layout-grid">
+          
+          <!-- Lado Esquerdo: Estatísticas, Campeões, Vice -->
+          <div class="details-sidebar">
+            <!-- Bloco de Destaque: País Campeão com bandeira -->
+            <div class="champion-highlight-box" id="details-champ-card">
+              <span class="badge-champ">CAMPEÃO 🏆</span>
+              <!-- Wrapper para carregar e alinhar a bandeira -->
+              <div class="flag-wrapper">
+                <!-- Bandeira do Campeão com fallback de erro -->
+                <img id="details-champ-flag" src="img/bandeiras/bandeira-brasil.png" alt="Bandeira do Campeão" onerror="this.style.display='none'">
+              </div>
+              <!-- Nome do País Campeão -->
+              <h3 id="details-champ-name">Brasil</h3>
+            </div>
+            
+            <!-- Bloco de Destaque: País Vice-Campeão com bandeira -->
+            <div class="runnerup-highlight-box" id="details-vice-card">
+              <span class="badge-vice">VICE-CAMPEÃO 🥈</span>
+              <div class="flag-wrapper">
+                <!-- Bandeira do Vice com fallback de erro -->
+                <img id="details-vice-flag" src="img/bandeiras/bandeira-italia.png" alt="Bandeira do Vice-Campeão" onerror="this.style.display='none'">
+              </div>
+              <!-- Nome do País Vice-Campeão -->
+              <h3 id="details-vice-name">Itália</h3>
+            </div>
+            
+            <!-- Bloco contendo as estatísticas rápidas e disciplinares da Copa -->
+            <div class="details-stats-card">
+              <h4>Estatísticas Rápidas</h4>
+              <ul class="stats-list">
+                <!-- Estatística 1: Artilheiro -->
+                <li>
+                  <span class="stat-icon">⚽</span>
+                  <div class="stat-content">
+                    <span class="stat-title">Artilheiro</span>
+                    <span class="stat-val" id="details-artilheiro">Gerd Müller (10 gols)</span>
+                  </div>
+                </li>
+                <!-- Estatística 2: Cartões Amarelos -->
+                <li>
+                  <span class="stat-icon card-yellow">🟨</span>
+                  <div class="stat-content">
+                    <span class="stat-title">Cartões Amarelos</span>
+                    <span class="stat-val" id="details-amarelos">33</span>
+                  </div>
+                </li>
+                <!-- Estatística 3: Cartões Vermelhos / Expulsões -->
+                <li>
+                  <span class="stat-icon card-red">🟥</span>
+                  <div class="stat-content">
+                    <span class="stat-title">Cartões Vermelhos / Expulsões</span>
+                    <span class="stat-val" id="details-vermelhos">0</span>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+          
+          <!-- Lado Direito: Descrição textual da história e galeria de registros fotográficos -->
+          <div class="details-main-content">
+            <!-- Cartão com o texto descritivo e histórico completo -->
+            <div class="details-text-card">
+              <h3>História da Edição</h3>
+              <p id="details-description">Descrição completa da copa...</p>
+            </div>
+            
+            <!-- Galeria com os 3 registros de imagens históricas da Copa -->
+            <div class="details-gallery-card">
+              <h3>Registros Históricos</h3>
+              <p class="gallery-sub">Espaços reservados para imagens icônicas desta edição.</p>
+              
+              <!-- Grid contendo as 3 fotos e suas legendas -->
+              <div class="details-gallery-grid">
+                <!-- Foto Histórica 1 -->
+                <div class="gallery-photo-item">
+                  <div class="photo-placeholder">
+                    <!-- Imagem 1 com redirecionamento em caso de erro local -->
+                    <img id="details-img-1" src="" alt="Registro Histórico 1" onerror="this.src='https://images.unsplash.com/photo-1508098682722-e99c43a406b2?q=80&w=500&auto=format&fit=crop'">
+                  </div>
+                  <!-- Legenda da Imagem 1 -->
+                  <span class="photo-desc" id="details-desc-1">Momento histórico</span>
+                </div>
+                <!-- Foto Histórica 2 -->
+                <div class="gallery-photo-item">
+                  <div class="photo-placeholder">
+                    <!-- Imagem 2 com redirecionamento em caso de erro local -->
+                    <img id="details-img-2" src="" alt="Registro Histórico 2" onerror="this.src='https://images.unsplash.com/photo-1544698310-74ea9d1c8258?q=80&w=500&auto=format&fit=crop'">
+                  </div>
+                  <!-- Legenda da Imagem 2 -->
+                  <span class="photo-desc" id="details-desc-2">Grande final</span>
+                </div>
+                <!-- Foto Histórica 3 -->
+                <div class="gallery-photo-item">
+                  <div class="photo-placeholder">
+                    <!-- Imagem 3 com redirecionamento em caso de erro local -->
+                    <img id="details-img-3" src="" alt="Registro Histórico 3" onerror="this.src='https://images.unsplash.com/photo-1518063319789-7217e6706b04?q=80&w=500&auto=format&fit=crop'">
+                  </div>
+                  <!-- Legenda da Imagem 3 -->
+                  <span class="photo-desc" id="details-desc-3">Destaques da Copa</span>
+                </div>
+              <!-- Fim da grid de fotos -->
+              </div>
+            </div>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+    
+    <!-- MASCOTE: Bola animada fixa no canto inferior direito das páginas de detalhes -->
+    <div class="mascote-fixed" id="mascote-fixed-container">
+      <!-- Balão de fala do mascote que exibe a curiosidade dinâmica no hover -->
+      <div class="speech-bubble" id="bubble-fixed">Eu nasci nessa Copa! Os cartões surgiram em 1970.</div>
+      <!-- Wrapper que engloba o mascote com animação de pulsação CSS -->
+      <div class="mascote-wrapper">
+        <object data="img/geral/mascote.svg" type="image/svg+xml" class="mascote-svg-obj" aria-label="Mascote Zico Detalhes"></object>
+      </div>
+    </div>
+  </section>
+
+  <!-- RODAPÉ: créditos do aluno e identificação da disciplina -->
+  <footer class="footer-section" id="footer-credits">
+    <div class="container text-center">
+      <!-- Título de copyright -->
+      <p class="footer-title">História das Copas do Mundo &copy; 2026</p>
+      <!-- Identificação do autor com destaque em dourado -->
+      <p class="footer-sub">Desenvolvido por <strong>Gabriel Cavalcante</strong></p>
+      <!-- Identificação da disciplina acadêmica -->
+      <p class="footer-discipline">Disciplina: Programação Back-End I</p>
+      <!-- Emojis decorativos -->
+      <div class="footer-social-sim">
+        <span>⚽</span>
+        <span>🏆</span>
+        <span>🌎</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Importa o arquivo de lógica JavaScript externo ao fim do carregamento do DOM -->
+  <script src="script.js"></script>
+</body>
+</html>
