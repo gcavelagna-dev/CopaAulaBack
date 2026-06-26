@@ -422,6 +422,33 @@ const paisesIso = {
   "Croácia": "hr"
 };
 
+const bandeirasLocais = {
+  "Uruguai": "img/bandeiras/uy.png",
+  "Itália": "img/bandeiras/it.png",
+  "Alemanha Ocidental": "img/bandeiras/de.png",
+  "Alemanha": "img/bandeiras/de.png",
+  "Brasil": "img/bandeiras/br.png",
+  "Inglaterra": "img/bandeiras/gb-eng.png",
+  "Argentina": "img/bandeiras/ar.png",
+  "França": "img/bandeiras/fr.png",
+  "Espanha": "img/bandeiras/es.png",
+  "Tchecoslováquia": "img/bandeiras/cz.png",
+  "Hungria": "img/bandeiras/hu.png",
+  "Suécia": "img/bandeiras/se.png",
+  "Países Baixos": "img/bandeiras/nl.png",
+  "Croácia": "img/bandeiras/hr.png"
+};
+
+function obterFonteBandeira(pais) {
+  if (bandeirasLocais[pais]) {
+    return bandeirasLocais[pais];
+  }
+
+  const iso = paisesIso[pais] || "br";
+  return `https://flagcdn.com/w320/${iso}.png`;
+}
+
+/*O DOM (Document Object Model) é a representação estruturada do código HTML de uma página web em forma de árvore*/
 /* Elementos do DOM: Captura as referências de contêineres e botões do HTML */
 const copasGallery = document.getElementById("copas-gallery"); // Grade de cards
 const homeView = document.getElementById("home-view"); // Bloco principal do site
@@ -436,12 +463,9 @@ function gerarCardsGaleria() {
   copasGallery.innerHTML = ""; // Limpa qualquer conteúdo antigo
   
   copasDados.forEach(copa => {
-    // Busca código ISO ou define 'br' se falhar
-    const isoCampeao = paisesIso[copa.campeao] || "br";
-    // Gera URL da bandeira do campeão via CDN
-    const flagUrl = `https://flagcdn.com/w320/${isoCampeao}.png`;
-    // Define caminho relativo para a bandeira local
-    const localFlagUrl = `img/bandeiras/bandeira-${copa.campeao.toLowerCase().replace(" ocidental", "")}.png`;
+    // Usa a bandeira local da pasta img/bandeiras quando disponível;
+    // se não houver, cai para a imagem via CDN.
+    const flagUrl = obterFonteBandeira(copa.campeao);
     
     // Cria elemento wrapper do card
     const card = document.createElement("div");
@@ -451,8 +475,8 @@ function gerarCardsGaleria() {
     // Insere o HTML interno do card contendo imagem, ano, sede, campeão e botão
     card.innerHTML = `
       <div class="card-header-flag">
-        <img class="card-flag-bg" src="${flagUrl}" alt="" aria-hidden="true" onerror="this.src='${localFlagUrl}'">
-        <img class="card-flag-main" src="${flagUrl}" alt="Bandeira do ${copa.campeao}" onerror="this.src='${localFlagUrl}'">
+        <img class="card-flag-bg" src="${flagUrl}" alt="" aria-hidden="true">
+        <img class="card-flag-main" src="${flagUrl}" alt="Bandeira do ${copa.campeao}">
         <span class="card-year-badge">${copa.ano}</span>
       </div>
       <div class="card-body">
@@ -487,6 +511,44 @@ function gerarCardsGaleria() {
   });
 }
 
+const imagensHistoricas = {
+  1930: [
+    "https://upload.wikimedia.org/wikipedia/commons/b/bd/Uruguay_and_Argentina_enter_the_field_1930_World_Cup_final.jpg",
+    "https://upload.wikimedia.org/wikipedia/commons/e/ec/Uruguay_1930_World_Cup_Champion.jpg",
+    "https://upload.wikimedia.org/wikipedia/commons/e/ec/Uruguay_1930_World_Cup_Champion.jpg"
+  ],
+
+  1950: [
+    "https://upload.wikimedia.org/wikipedia/commons/d/da/Gol_de_Ghiggia_-_Maracanazo.jpg",
+    "https://upload.wikimedia.org/wikipedia/commons/d/da/Gol_de_Ghiggia_-_Maracanazo.jpg",
+    "https://upload.wikimedia.org/wikipedia/commons/d/da/Gol_de_Ghiggia_-_Maracanazo.jpg"
+  ],
+
+  1958: [
+    "https://upload.wikimedia.org/wikipedia/commons/4/4e/Pel%C3%A9_1958.jpg",
+    "https://upload.wikimedia.org/wikipedia/commons/4/4e/Pel%C3%A9_1958.jpg",
+    "https://upload.wikimedia.org/wikipedia/commons/4/4e/Pel%C3%A9_1958.jpg"
+  ],
+
+  1970: [
+    "https://upload.wikimedia.org/wikipedia/commons/6/69/Pel%C3%A9_celebrando_M%C3%A9xico_1970.jpg",
+    "https://upload.wikimedia.org/wikipedia/commons/6/69/Pel%C3%A9_celebrando_M%C3%A9xico_1970.jpg",
+    "https://upload.wikimedia.org/wikipedia/commons/6/69/Pel%C3%A9_celebrando_M%C3%A9xico_1970.jpg"
+  ],
+
+  1994: [
+    "https://upload.wikimedia.org/wikipedia/commons/7/77/Baggio_World_Cup_1994.jpg",
+    "https://upload.wikimedia.org/wikipedia/commons/7/77/Baggio_World_Cup_1994.jpg",
+    "https://upload.wikimedia.org/wikipedia/commons/7/77/Baggio_World_Cup_1994.jpg"
+  ],
+
+  2022: [
+    "https://upload.wikimedia.org/wikipedia/commons/b/b4/Lionel_Messi_with_the_World_Cup_trophy.jpg",
+    "https://upload.wikimedia.org/wikipedia/commons/b/b4/Lionel_Messi_with_the_World_Cup_trophy.jpg",
+    "https://upload.wikimedia.org/wikipedia/commons/b/b4/Lionel_Messi_with_the_World_Cup_trophy.jpg"
+  ]
+};
+
 /* Ao clicar em "Ver detalhes", popula o template e exibe a página da edição */
 function abrirPaginaDetalhes(copa) {
   // Reseta classe de temas de cores anteriores no contêiner principal
@@ -505,32 +567,28 @@ function abrirPaginaDetalhes(copa) {
   document.getElementById("details-vermelhos").innerText = copa.cartoesVermelhos;
   document.getElementById("details-description").innerText = copa.descricao;
   
-  // Busca códigos ISO para as bandeiras de campeão e vice
-  const isoChamp = paisesIso[copa.campeao] || "br";
-  const isoVice = paisesIso[copa.vice] || "ar";
-  
-  // Carrega bandeira do campeão com redirecionamento de erro local
+  // Carrega bandeira do campeão usando primeiro a imagem local da pasta img/bandeiras
   const champFlagImg = document.getElementById("details-champ-flag");
-  champFlagImg.src = `https://flagcdn.com/w320/${isoChamp}.png`;
-  champFlagImg.onerror = () => {
-    champFlagImg.src = `img/bandeiras/bandeira-${copa.campeao.toLowerCase().replace(" ocidental", "")}.png`;
-  };
+  champFlagImg.src = obterFonteBandeira(copa.campeao);
   
-  // Carrega bandeira do vice com redirecionamento de erro local
+  // Carrega bandeira do vice usando primeiro a imagem local da pasta img/bandeiras
   const viceFlagImg = document.getElementById("details-vice-flag");
-  viceFlagImg.src = `https://flagcdn.com/w320/${isoVice}.png`;
-  viceFlagImg.onerror = () => {
-    viceFlagImg.src = `img/bandeiras/bandeira-${copa.vice.toLowerCase().replace(" ocidental", "")}.png`;
-  };
+  viceFlagImg.src = obterFonteBandeira(copa.vice);
   
   // Mapeia os caminhos locais para as 3 fotos da galeria de detalhes
   const img1 = document.getElementById("details-img-1");
   const img2 = document.getElementById("details-img-2");
   const img3 = document.getElementById("details-img-3");
   
-  img1.src = `img/copas/${copa.ano}-1.jpg`; // Caminho local foto 1
-  img2.src = `img/copas/${copa.ano}-2.jpg`; // Caminho local foto 2
-  img3.src = `img/copas/${copa.ano}-3.jpg`; // Caminho local foto 3
+  if (imagensHistoricas[copa.ano]) {
+  img1.src = imagensHistoricas[copa.ano][0];
+  img2.src = imagensHistoricas[copa.ano][1];
+  img3.src = imagensHistoricas[copa.ano][2];
+} else {
+  img1.src = `img/copas/${copa.ano}-1.jpg`;
+  img2.src = `img/copas/${copa.ano}-2.jpg`;
+  img3.src = `img/copas/${copa.ano}-3.jpg`;
+}
   
   // Preenche as legendas correspondentes de cada imagem
   document.getElementById("details-desc-1").innerText = copa.fotosLegendas[0];
